@@ -1,5 +1,12 @@
 package expenseallocation.model
 
+import java.util.UUID
 
-case class Employee(id: String, name: String, role: String, managerId: Option[String])
+
+object EmployeeTypes {
+  val manager = "manager"
+  val developer = "developer"
+}
+
+case class Employee(id: UUID = UUID.randomUUID(), name: String, role: String, managerId: Option[UUID] = None)
 
