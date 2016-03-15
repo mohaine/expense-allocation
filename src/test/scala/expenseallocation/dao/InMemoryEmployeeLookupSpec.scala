@@ -55,4 +55,23 @@ class InMemoryEmployeeLookupSpec extends FunSpec with Matchers {
     lookup.lookupByManagerId(None) should contain(topManager)
   }
 
+  it("Looks up cost") {
+    val lookup = new InMemoryEmployeeLookup(Seq(), Map(
+      (EmployeeTypes.developer, 1000),
+      (EmployeeTypes.tester, 500),
+      (EmployeeTypes.manager, 300)
+    ))
+
+    lookup.cost(EmployeeTypes.developer) should be(1000.0)
+    lookup.cost(EmployeeTypes.tester) should be(500.0)
+    lookup.cost(EmployeeTypes.manager) should be(300.0)
+
+    intercept[Exception] {
+      lookup.cost("Other")
+    }.getMessage should be("Role does not exist")
+
+
+  }
+
+
 }

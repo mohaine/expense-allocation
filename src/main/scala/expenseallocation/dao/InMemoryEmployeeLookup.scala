@@ -8,7 +8,7 @@ import expenseallocation.model.Employee
 /**
   * Created by graessle on 3/15/16.
   */
-class InMemoryEmployeeLookup(employees: Seq[Employee]) extends EmployeeLookup {
+class InMemoryEmployeeLookup(employees: Seq[Employee], costsPerRole: Map[String, Double] = Map()) extends EmployeeLookup {
 
   private lazy val employeesById = employees.map(e => (e.id, e)).toMap
 
@@ -20,4 +20,6 @@ class InMemoryEmployeeLookup(employees: Seq[Employee]) extends EmployeeLookup {
   override def lookupByManagerId(employeeId: Option[UUID]): Seq[Employee] = {
     employeesByManagerId.getOrElse(employeeId, Seq[Employee]())
   }
+
+  override def cost(role: String): Double = costsPerRole.getOrElse(role,throw new RuntimeException("Role does not exist"))
 }
