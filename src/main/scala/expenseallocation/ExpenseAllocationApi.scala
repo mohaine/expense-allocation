@@ -11,11 +11,9 @@ trait EmployeeLookup {
   def lookupByManagerId(employeeId: Option[UUID]): Seq[Employee]
 
   def cost(role: String): Double
-
 }
 
 class ExpenseAllocationApi(employeeLookup: EmployeeLookup) {
-
   def calculateAllocation(id: UUID): Double = {
     val e = employeeLookup.lookup(id).getOrElse(throw new RuntimeException("Employee does not exist"))
     calculateAllocation(e)
@@ -27,7 +25,5 @@ class ExpenseAllocationApi(employeeLookup: EmployeeLookup) {
       sum + calculateAllocation(e.id)
     })
   }
-
 }
-
 
